@@ -1,0 +1,302 @@
+
+#include <iostream>
+
+using namespace std;
+            
+ class FloatList
+{
+private:
+	
+	struct nodeType
+  {
+    int data;
+    nodeType *link;   }; 
+	
+    nodeType *head;	
+public:
+	FloatList(void)	
+	{   head = NULL;  }
+	
+void show ()
+{
+		 nodeType*current;
+	current=head;
+	while(current!=NULL)
+	{
+		cout<<"node info is "<<current->data<<endl;
+		current=current->link;
+	}}
+	
+	
+void  even ()
+{
+		 nodeType*current;
+	current=head;
+	int e ;
+	while(current!=NULL)
+	{   
+	   if( current->data % 2==0 )
+	   {
+ 	   	e++;
+	   	cout<<endl<<"node info is even "<<current->data<<" is even "<<endl;
+	   	cout<<endl;
+	   }
+         
+
+		current=current->link;
+		
+	}
+	cout<<" there are  "<<e<<" even numbers "<<endl;
+	}	
+	
+	void  prime ()
+{
+		 nodeType*current;
+	current=head;
+	int p ;
+	while(current!=NULL)
+	{   
+	   if( current->data % 2 && current->data % 3 && current->data % 5 && current->data % 7   )
+	   {
+ 	   	p++;
+	   	cout<<endl<<"node info is prime "<<current->data<<" is prime "<<endl;
+	   	cout<<endl;
+	   }
+
+		current=current->link;
+	}
+	cout<<" there are  "<<p<<" prime numbers "<<endl;
+	}	
+
+void deletenode (int num)
+   {
+           nodeType *current, *previous;
+        if (head == NULL)
+        {
+               return;
+         }
+         if (head->data == num)
+          {
+             current=head;
+             head = head->link;
+             delete current;
+            }
+         else
+           {                          
+   	    current = head;
+   	    while(current!= NULL && current->data != num)
+   	    {
+   	        previous= current;
+                        current = current->link;   
+           } 
+        if(current == NULL)
+          {  
+                 cout<<num<<" not found\n\n";
+           }
+     
+        else
+        {   previous->link = current->link;
+            delete current;
+        }	
+   }}
+	
+void position ( int c , int d  )
+{
+	nodeType *newnode;
+	newnode = new nodeType() ;
+	newnode->data= c;
+	newnode->link =NULL ;
+		nodeType *p;
+	if ( head == NULL )
+	{head = newnode ; }
+else 
+{
+p=head ;
+while ( p->data == d)
+{
+p=p->link ;
+}
+newnode->link = p->link ;
+p->link = newnode ;
+
+}
+}
+	void deleteall(){
+ 
+nodeType *ptr;
+ptr=head;
+while (head!=NULL)
+{ptr=head;
+head=head->link;
+ delete(ptr);
+}	}
+	
+void appendNode(float num)
+{ 
+
+    nodeType *newNode, *current;
+    newNode = new nodeType;
+    newNode->data = num;
+    newNode->link = NULL;
+
+     if (head == NULL)
+      { 
+           head = newNode;
+      }
+     else	                
+      {
+        current = head;
+                          
+            while (current->link != NULL)
+            {
+                      current = current->link;
+             }
+             current->link = newNode;
+    }
+}};
+
+int main ()
+{
+	FloatList f;
+	int a , num , posi , del;
+	cout<<" how many node you want to enter :"<<"  ";
+	cin>>a;
+	cout<<endl;
+	for ( int i=0 ; i< a ; i++ )
+	{ 
+	int z ;
+	cout<<" enter number for "<<i+1<<" node :"<<"   ";
+	cin>>z;
+		f.appendNode(z);
+		z=0;
+	};
+	f.show();
+	cout<<" number you want to enter at position  ";
+	cin>>num ;
+	cout<<endl << " at which position :";
+	cin>>posi;
+	f.position( num , posi );
+	f.show();
+	cout<<" enter number you want to delete  "<<endl;
+	cin>>del;
+	f.deletenode(del);
+    f.show();
+    f.even();
+    f.prime();
+	f.show();
+    
+    
+    
+	
+	return 0;	
+}
+	
+           
+
+B.	Given a singly linked list containing N nodes, add following functions in linked list:
+
+•	Delete function, that can delete all nodes of linked list.
+•	Destructor for the linked list class.
+•	Overload assignment operator for the linked list.
+
+
+
+#include<iostream>
+using namespace std;
+
+class Floatlist{
+	private:
+	struct node{
+	float info;
+	node *link;
+};
+node *Head;
+
+		public:
+		Floatlist(void){Head=NULL;}
+	    ~Floatlist(void);
+	    void appendnode(float);
+		void insertnode(float);
+		void deletenode(float);
+		
+
+	void displaylist();
+	void deleteall(){
+ 
+node *ptr;
+ptr=Head;
+while (Head!=NULL)
+{ptr=Head;
+Head=Head->link;
+ delete(ptr);
+}	}
+		
+};
+void Floatlist::appendnode(float a)
+{
+node *newnode;
+newnode= new node; //memory allocated dynamically
+newnode->info=a; //any number e.g num=1  is passed from main
+newnode->link=NULL;
+node *current;
+if (Head==NULL)
+{
+Head=newnode;
+}
+else
+{
+current=Head;
+while (current->link!=NULL)
+{
+current=current->link;
+}
+current->link=newnode;
+}
+}
+void Floatlist::displaylist()
+{
+	node *current;
+	current=Head;
+	while(current!=NULL)
+	{
+		cout<<"node info is "<<current->info<<endl;
+		current=current->link;
+	}
+	
+}
+Floatlist::~Floatlist()
+{
+	node *nodeptr, *linknode;
+	nodeptr=Head;linknode=Head;
+	while(nodeptr!=NULL)
+	{
+		linknode=nodeptr->link;
+		delete nodeptr;
+		nodeptr=linknode;
+	}
+}
+int main()
+{
+	Floatlist list;
+	int n,x;
+	cout<<" how many node you want to enter "<<endl;
+	cin>>n;
+	float a[n];
+	cout<<"enter your float linked list"<<endl;
+	for (int i=0;i<n;i++)
+	{
+	cin>>a[i];
+	list.appendnode(a[i]);
+	}
+	list.displaylist();	
+	cout<<endl<<"enter any number to delete all node "<<endl;
+	cin>>x;
+	list.deleteall();
+	cout<<"  all node have been deleted "<<endl;
+	
+
+	
+	return 0;
+	list.~Floatlist();
+
+}
